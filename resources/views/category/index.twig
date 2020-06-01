@@ -1,0 +1,33 @@
+{% extends 'templates/body.twig' %}
+{% block content %}
+<a href="{{ path_for('cat.index', { slug: cat.slug }) }}" class="btn btn-sm btn-info mb-2">&laquo; Inapoi la {{ cat.name }}</a>
+<h5>{{ list.name }}</h5>
+{% if cat.getProductsFrom(list.id, 5) | length %}
+    <hr>
+    <div class="row">
+        {% if pagination.needed %}
+        <div class="col-md-12 col-sm-12">
+            {% include 'templates/partials/pagination.twig' with {pagination: pagination} %}
+        </div>
+        {% endif %}
+
+        {% for product in cat.getProductsAllFrom(list.id, 9, pagination.page) %}
+        <div class="col-md-4 col-sm-4">
+            {% include 'products/items.twig' with {product: product} %}
+        </div>
+        {% endfor %}
+
+        {% if pagination.needed %}
+        <div class="col-md-12 col-sm-12">
+            {% include 'templates/partials/pagination.twig' with {pagination: pagination} %}
+        </div>
+        {% endif %}
+    </div>
+{% else %}
+<div class="card bg-light mb-5">
+    <div class="card-body">
+        Nu sunt produse.
+    </div>
+</div>
+{% endif %}
+{% endblock %}

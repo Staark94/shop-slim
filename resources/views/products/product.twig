@@ -1,0 +1,162 @@
+{% extends 'templates/body.twig' %}
+{% block content %}
+<a href="{{ path_for('cat.index', {slug: product.catLink() }) }}" class="btn btn-sm btn-info mb-2">&laquo; Back to {{ product.catName() }}</a>
+
+<div class="row">
+    <div class="col-12 col-lg-6">
+        <div class="card bg-light mb-3">
+            <div class="card-body align-self-center">
+                <a href="" data-toggle="modal" data-target=".bd-example-modal-lg" data-target="#productModal">
+                    <img class="img-fluid" src="{{ product.getImage() }}" />
+                </a>
+
+                {% if product.galery %}
+                <hr>
+                <div class="product-gallery">
+                    {{ product.showGallery()|raw }}
+                </div>
+                {% endif %}
+            </div>
+        </div>
+    </div>
+
+    <div class="modal fade bd-example-modal-lg" tabindex="-1" role="dialog" aria-labelledby="productModal" aria-hidden="true">
+        <div class="modal-dialog modal-xl">
+            <div class="modal-content">
+                <div class="modal-header">
+                    <h5 class="modal-title">{{ product.title }} - Full size</h5>
+                    <button type="button" class="close" data-dismiss="modal" aria-label="Close">
+                        <span aria-hidden="true">&times;</span>
+                    </button>
+                </div>
+
+                <div class="modal-body">
+                    <img src="{{ product.getImage() }}" />
+                </div>
+            </div>
+        </div>
+    </div>
+
+    <!-- SHOW GALLERY MODAL -->
+    <div class="modal fade" id="galleryModal" tabindex="-1" role="dialog" aria-labelledby="galleryModalLabel" aria-hidden="true">
+      <div class="modal-dialog" role="document">
+        <div class="modal-content">
+
+          <div class="modal-header">
+            <h5 class="modal-title" id="exampleModalLabel">Show full size</h5>
+            <button type="button" class="close" data-dismiss="modal" aria-label="Close">
+              <span aria-hidden="true">&times;</span>
+            </button>
+          </div>
+
+          <div class="modal-body">
+
+          </div>
+
+        </div>
+      </div>
+    </div>
+
+    <script src="https://ajax.googleapis.com/ajax/libs/jquery/2.2.4/jquery.min.js"></script>
+    <script type="text/javascript">
+    $(function() {
+        $('#galleryModal').on('show.bs.modal', function (event) {
+          var button = $(event.relatedTarget);
+          var recipient = button.data('whatever');
+          var modal = $(this);
+
+          modal.find('.modal-body').html('<img src="'+recipient+'" style="width: 100%;" />');
+        });
+    });
+    </script>
+
+    <!-- Add to cart -->
+    <div class="col-12 col-lg-6 add_to_cart_block">
+        <div class="card bg-light mb-3">
+            <div class="card-body">
+
+                {% if customer.admin() %}
+                <div class="col-lg text-center" style="display: block;clear: both;min-height: 50px;margin: 0 auto 20px;">
+                    <form method="get" name="delete" action="{{ path_for('del.prod', { id: product.id }) }}" style="float: left;">
+                        <input type="submit" class="btn btn-danger btn-md text-uppercase" value="Sterge Produs" />
+                        <input type="hidden" name="p" value="{{ product.price }}" />
+                        <input type="hidden" name="t" value="{{ product.title }}" />
+                        <input type="hidden" name="f" value="{{ product.id }}" />
+                        <input type="hidden" name="redirect" value="{{ path_for('cat.index', {slug: product.catLink() }) }}" />
+                    </form>
+
+                    <form method="get" name="edit" action="{{ path_for('edit.prod', { id: product.id }) }}" style="float: right;">
+                        <input type="submit" class="btn btn-info btn-md text-uppercase" value="Editeaza Produs" />
+                        <input type="hidden" name="f" value="{{ product.id }}" />
+                    </form>
+                </div>
+                {% endif %}
+
+                <h4 class="text-info text-center text-uppercase">
+                    {{ product.title }}
+                </h4>
+                <p class="price">{{ product.price }} RON</p>
+                {% if product.old_price > product.price %}
+                <p class="price_discounted">{{ product.old_price }} RON</p>
+                {% endif %}
+
+                {% if product.inStock() and not product.hasLowStock() %}
+                <div class="text-center text-uppercase mb-3"><strong class="badge badge-success text-light">In Stoc</strong></div>
+                {% endif %}
+
+                {% if product.outOfStock() %}
+                <div class="text-center text-uppercase mb-3"><strong class="badge badge-danger text-light">Stoc epuizat</strong></div>
+                {% endif %}
+
+                {% if product.hasLowStock() %}
+                <div class="text-center text-uppercase mb-3"><strong class="badge badge-warning text-light">Stoc limitat</strong></div>
+                {% endif %}
+
+                <div class="col-lg text-center">
+                    {% if not product.outOfStock() %}
+                    <a href="{{ path_for('cart.add', { slug: product.slug, quantity: 1 }) }}" class="btn btn-success btn-md text-uppercase">
+                        <i class="fa fa-shopping-cart"></i> Adauga in cos
+                    </a>
+                    {% endif %}
+
+                    <a href="{{ path_for('product.fav', { slug: product.slug, back: product.getSlug() }) }}" class="btn btn-danger btn-md text-uppercase">
+                        <i class="fa fa-heart-o"></i> Adauga la favorite
+                    </a>
+                </div>
+
+                <div class="product_rassurance">
+                    <ul class="list-inline">
+                        <li class="list-inline-item"><i class="fa fa-truck fa-2x"></i><br/>Curier rapid</li>
+                        <li class="list-inline-item"><i class="fa fa-phone fa-2x"></i><br/>
+                            {% if product.phone is not empty %}
+                            {% set numbers = product.phone|split(', ') %}
+                                {% for item in numbers %}
+                                    <a href="callto:+4{{ item }}">+4{{ item }}</a> {% if not loop.last %}/ {% endif %}
+                                {% endfor %}
+                            {% else %}+ 33 12 14 15 16{% endif %}
+                        </li>
+                    </ul>
+                </div>
+
+                <div class="col-md col-sm-8 text-left mt-2">
+                    Categorie: {{ product.productCategory() | raw }} | Posted at {{ product.created_at | date("j, F Y") }}
+                </div>
+            </div>
+        </div>
+    </div>
+</div>
+
+<div class="row mt-2">
+    <!-- Description -->
+    <div class="col-12">
+        <div class="card border-light mb-3">
+            <div class="card-header bg-primary text-white text-uppercase"><i class="fa fa-align-justify"></i> Descriere produs</div>
+            <div class="card-body">
+                <p class="card-text">
+                    {{ product.description | raw }}
+                </p>
+            </div>
+        </div>
+    </div>
+</div>
+{% endblock %}

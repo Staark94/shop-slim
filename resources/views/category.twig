@@ -1,0 +1,44 @@
+{% extends 'templates/body.twig' %}
+{% block content %}
+    <a href="{{ path_for('index') }}" class="btn btn-sm btn-info mb-2">&laquo; Inapoi la index</a>
+    {% if cat.getProducts(cat.id, 5) | length %}
+    <h5>{{ cat.name }}</h5>
+    <hr>
+    <div class="row">
+        {% if pagination.needed %}
+        <div class="col-md-12 col-sm-12">
+            {% include 'templates/partials/pagination.twig' with {pagination: pagination} %}
+        </div>
+        {% endif %}
+
+        {% if list is not empty %}
+        <div class="col-md-4 col-sm-6">
+            <h5>Sub Categorii</h5>
+            <ul class="list-group">
+                {% for item in list %}
+                <li class="list-group-item"><a href="{{ path_for('cat.show', {slug: cat.slug, sub: item.slug}) }}">{{ item.name }}</a> </li>
+                {% endfor %}
+            </ul>
+        </div>
+        {% endif %}
+        
+        {% for product in cat.getProductsAll(cat.id, 9, pagination.page) %}
+        <div class="col-md-4 col-sm-4">
+            {% include 'products/items.twig' with {product: product} %}
+        </div>
+        {% endfor %}
+
+        {% if pagination.needed %}
+        <div class="col-md-12 col-sm-12">
+            {% include 'templates/partials/pagination.twig' with {pagination: pagination} %}
+        </div>
+        {% endif %}
+    </div>
+    {% else %}
+    <div class="card bg-light mb-5">
+        <div class="card-body">
+            Nu sunt produse.
+        </div>
+    </div>
+    {% endif %}
+{% endblock %}

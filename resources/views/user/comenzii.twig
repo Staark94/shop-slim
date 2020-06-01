@@ -1,0 +1,24 @@
+{% extends "templates/body.twig" %} 
+{% block content %}
+{% set total = 0 %}
+
+<div class="row mb-5" id="history">
+    <div class="col-lg">
+        <h1 class="order-hist-title">Comenzile mele</h1>
+        <div class="card-body">
+            {% for item in items %}
+                <section id="comanda_{{ item.id }}">
+                <h6><a href="{{ path_for('user.cmd.view', {id: item.id, key: item.hash}) }}">Comanda nr. {{ item.id }}</a></h6>
+                <p>Plasata pe: {{ item.created_at|date("d F Y, H:i a") }} | Total: {{ item.total }} Lei</p>
+                <hr>
+                {% for prod in produse['produs_' ~ item.id] %}
+                    <p>Produse vandute si livrate de Shop PieseTV Company</p>
+                    <p>Subtotal: {{ prod.price }} Lei</p>
+                    <p class="order-vendor-list-shipping-status">{{ item.status() }}</p>
+                {% endfor %}
+                </section>
+            {% endfor %}
+        </div>
+    </div>
+</div>
+{% endblock %}

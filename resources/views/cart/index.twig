@@ -1,0 +1,82 @@
+{% extends 'templates/body.twig' %}
+{% block content %}
+    {% if not basket.itemCount %}
+    <div class="card bg-light mb-3">
+        <div class="card-body">
+            Cosul dumneavoastra de cumparaturi este gol. Pentru a adauga produse in cos va rugam sa va <a href="{{ path_for('index') }}" class="text-warning">intoarceti in magazin</a> si selectati adauga in cos in pagina de produs.
+        </div>
+    </div>
+    {% else %}
+    <div class="row">
+        <div class="col-md-12">
+            <div class="table-responsive">
+                <table class="table table-striped">
+                    <thead>
+                        <tr>
+                            <th scope="col"> </th>
+                            <th scope="col">Product</th>
+                            <th scope="col">Available</th>
+                            <th scope="col" class="text-center">Quantity</th>
+                            <th scope="col" class="text-right">Price</th>
+                            <th> </th>
+                        </tr>
+                    </thead>
+                    <tbody>
+                        {% for item in basket.all %}
+                        <tr>
+                            <td>
+                                <img src="{{ item.getImage() }}" alt="" width="50px" height="50px" />
+                            </td>
+                            <td>{{ item.title }}</td>
+                            <td>
+                                {% if not item.hasLowStock() %}
+                                    <span class="text-success"><strong>In Stock</strong></span>
+                                {% else %}
+                                    <span class="text-warning"><strong>Low Stock</strong></span>
+                                {% endif %}
+                            </td>
+                            <td>
+                                <input class="form-control" type="text" value="{{ item.quantity }}" />
+                            </td>
+                            <td class="text-right">{{ item.price }} RON</td>
+                            <td class="text-right">
+                                <form action="{{ path_for('cart.update', {slug: item.getSlug() }) }}" method="POST">
+                                    <button class="btn btn-sm btn-danger"><i class="fa fa-trash"></i></button>
+                                </form>
+                            </td>
+                        </tr>
+                        {% endfor %}
+                        <tr>
+                            <td></td>
+                            <td></td>
+                            <td></td>
+                            <td></td>
+                            <td><strong>Sub-Total</strong></td>
+                            <td class="text-right"><strong>{{ basket.subTotal | number_format(2) }} RON</strong></td>
+                        </tr>
+                        <tr>
+                            <td></td>
+                            <td></td>
+                            <td></td>
+                            <td></td>
+                            <td><strong>Total</strong></td>
+                            <td class="text-right"><strong>{{ basket.totalPrice | number_format(2) }} RON</strong></td>
+                        </tr>
+                    </tbody>
+                </table>
+            </div>
+        </div>
+        <div class="col-lg col mb-2">
+            <div class="row">
+                <div class="col-sm-12  col-md-6">
+                    <a class="btn btn-block btn-light" href="{{ path_for('index') }}">Adaugati si alte produse</a>
+                </div>
+
+                <div class="col-sm-12 col-md-6 text-right">
+                    <a class="btn btn-block btn-success text-uppercase" href="{{ path_for('cart.order') }}">Cumpara</a>
+                </div>
+            </div>
+        </div>
+    </div>
+    {% endif %}
+{% endblock %}

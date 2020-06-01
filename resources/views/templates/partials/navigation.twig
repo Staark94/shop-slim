@@ -1,0 +1,111 @@
+<nav class="navbar navbar-expand-md navbar-dark bg-dark" style="border-radius: 0;">
+    <div class="container">
+        <a class="navbar-brand" href="{{ path_for('index') }}"><span class="ef">PieseTV</span> Shop</a>
+        <button class="navbar-toggler" type="button" data-toggle="collapse" data-target="#navbarsExampleDefault" aria-controls="navbarsExampleDefault" aria-expanded="false" aria-label="Toggle navigation">
+            <span class="navbar-toggler-icon"></span>
+        </button>
+
+        <div class="collapse navbar-collapse justify-content-end" id="navbarsExampleDefault">
+            <ul class="navbar-nav mr-auto">
+                <li class="nav-item">
+                    <a class="btn btn-sm text-light ml-1 nav-link" href="{{ path_for('faq') }}"> <i class="fa fa-question-circle-o" aria-hidden="true"></i> Cum cumpar</a>
+                </li>
+
+                <li class="nav-item">
+                    <a class="btn btn-sm text-light ml-1 nav-link" href="{{ path_for('retur') }}"> <i class="fa fa-registered" aria-hidden="true"></i> Conditii retur</a>
+                </li>
+
+                <li class="nav-item">
+                    <a class="btn btn-sm text-light ml-1 nav-link" href="{{ path_for('contact') }}"> <i class="fa fa-volume-control-phone" aria-hidden="true"></i> Contact</a>
+                </li>
+
+                {% if customer.admin() %}
+                <li class="nav-item dropdown">
+                    <a class="btn btn-sm text-light ml-1 nav-link dropdown-toggle" href="#" id="adminDropdown" role="button" data-toggle="dropdown" aria-haspopup="true" aria-expanded="false">
+                        <i class="fa fa-user"></i> Admin Menu
+                    </a>
+
+                    <div class="dropdown-menu" aria-labelledby="adminDropdown">
+                        <h6 class="dropdown-header">Salut, {{ customer.user() }}</h6>
+                        <div class="dropdown-divider"></div>
+                        <a class="dropdown-item" href="{{ path_for('product.new') }}"> <i class="fa fa-plus-circle" aria-hidden="true"></i> Adauga Produs</a>
+                        <a class="dropdown-item" href="{{ path_for('admin.cat', {method: 'cat'}) }}"> <i class="fa fa-plus-circle" aria-hidden="true"></i> Adauga Categorie</a>
+                        <a class="dropdown-item" href="{{ path_for('admin.sub_cat.select') }}"> <i class="fa fa-plus-circle" aria-hidden="true"></i> Adauga Sub-Categorie</a>
+                        <div class="dropdown-divider"></div>
+                        <a class="dropdown-item" href="{{ path_for('admin.orders') }}"> <i class="fa fa-shopping-cart" aria-hidden="true"></i> Comenzii noi (0)</a>
+                        <a class="dropdown-item" href="{{ path_for('admin.products') }}"> <i class="fa fa-file" aria-hidden="true"></i> Produse noi (0)</a>
+                        <a class="dropdown-item" href="{{ path_for('admin.users') }}"> <i class="fa fa-file" aria-hidden="true"></i> Utilizatori</a>
+                    </div>
+                </li>
+                {% endif %}
+            </ul>
+
+            <ul class="navbar-nav ml-auto">
+                {% if not customer.logged() %}
+                <li class="nav-item">
+                    <a class="btn btn-sm text-light ml-1 nav-link" href="{{ path_for('auth.login') }}">
+                        <i class="fa fa-user"></i> Contul meu
+                    </a>
+                </li>
+                {% else %}
+                <li class="nav-item dropdown">
+                    <a class="btn btn-sm text-light ml-1 nav-link dropdown-toggle" href="{{ path_for('auth.account') }}" id="customerDropdown" role="button" data-toggle="dropdown" aria-haspopup="true" aria-expanded="false">
+                        <i class="fa fa-user"></i> Contul meu
+                    </a>
+
+                    <div class="dropdown-menu" aria-labelledby="customerDropdown">
+                        <h6 class="dropdown-header">Salut, {{ customer.user() }}</h6>
+                        <div class="dropdown-divider"></div>
+                        <div class="dropdown-item"> <i class="fa fa-shopping-cart" aria-hidden="true"></i> <a class="nav-item" href="{{ path_for('user.cmd') }}">Comenziile mele</a></div>
+                        <div class="dropdown-item"> <i class="fa fa-cogs" aria-hidden="true"></i> <a class="nav-item" href="{{ path_for('user.retur') }}">Retur</a></div>
+                        <div class="dropdown-item"> <i class="fa fa-cog" aria-hidden="true"></i> <a class="nav-item" href="{{ path_for('auth.account') }}">Date Personale</a></div>
+                        <div class="dropdown-divider"></div>
+                        <div class="dropdown-item"> <i class="fa fa-dashcube" aria-hidden="true"></i> <a class="nav-item" href="{{ path_for('auth.logout') }}">Deconectare</a></div>
+                    </div>
+                </li>
+                {% endif %}
+
+                {% if customer.logged() %}
+                <li class="nav-item dropdown">
+                    <a class="btn btn-sm text-light ml-1 nav-link dropdown-toggle" href="#" id="navbarDropdown" role="button" data-toggle="dropdown" aria-haspopup="true" aria-expanded="false">
+                        <i class="fa fa-heart"></i> Favorite
+                    </a>
+
+                    <div class="dropdown-menu dropdown-menu-right" style="min-width: 350px" aria-labelledby="navbarDropdown">
+                        {% if wishlist.itemCount > 0 %}
+                        <h6 class="dropdown-header">Adaugate Recent</h6>
+                        <div class="dropdown-divider"></div>
+                        {% for item in wishlist.all %}
+                        <div class="dropdown-item">
+                            <div class="row">
+                                <div class="col-sm-2">
+                                    <img src="{{ item.getImage() }}" alt="" width="30" height="30" />
+                                </div>
+
+                                <div class="col-sm">
+                                    <a style="white-space: pre-wrap;" class="text-left" href="{{ item.slug }}">{{ item.title }}</a>
+                                </div>
+                            </div>
+                        </div>
+                        {% endfor %}
+                        <div class="dropdown-divider"></div>
+                        <a class="dropdown-item text-center" href="#">
+                            &raquo; Vezi toate produse favorite
+                        </a>
+                        {% else %}
+                        <div class="dropdown-item">Nu ai nimic in lista de favorite !</div>
+                        {% endif %}
+                    </div>
+                </li>
+                {% endif %}
+
+                <li class="nav-item">
+                    <a class="btn btn-success text-light btn-sm ml-3 mt-1" href="{{ path_for('cart') }}">
+                        <i class="fa fa-shopping-cart"></i> Cosul meu
+                        <span class="badge badge-light">{{ basket.itemCount }}</span>
+                    </a>
+                </li>
+            </ul>
+        </div>
+    </div>
+</nav>

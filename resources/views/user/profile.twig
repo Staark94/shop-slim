@@ -1,0 +1,74 @@
+{% extends 'templates/body.twig' %}
+{% block content %}
+    <div class="row mb-5" id="profile">
+        <div class="col-md-3 sidebar-container">
+            <div class="card">
+                <div class="card-body text-center">
+                    <div class="user-thumbnail"></div>
+                    <h4><b>{{ user.data('nume_prenume') }}</b></h4>
+                    <p>{{ customer.user() }}</p>
+                </div>
+
+                <div class="card-body mt-3">
+                    <ul class="list-group">
+                        <li class="list-group-item">Comenzii Finalizate</li>
+                        <li class="list-group-item">Comenzii Anulate</li>
+                        <li class="list-group-item">Comenzii Retur</li>
+                        <li class="list-group-item">Date Livrare</li>
+                        <li class="list-group-item">Setari siguranta</li>
+                    </ul>
+                </div>
+            </div>
+        </div>
+        <div class="col-md-8 mb-3">
+            <div class="row">
+                <div class="col-md-12 mb-3">
+                    <h5>Datele mele</h5>
+                    <div class="card">
+                        <div class="card-body">
+                            <form action="#" method="post" class="form-block">
+                                <div class="form-group">
+                                    <label for="">Forma de adresare: </label>
+                                    <input type="text" name="" class="form-control form-control-sm" value="Dl." />
+                                </div>
+
+                                <div class="form-group">
+                                    <label for="">Nume Prenume: </label>
+                                    <input type="text" name="" class="form-control form-control-sm" value="{{ user.data('nume_prenume') }}" />
+                                </div>
+
+                                <div class="form-group">
+                                    <label for="">Nickname: </label>
+                                    <input type="text" name="" class="form-control form-control-sm" value="{{ customer.user() }}" />
+                                </div>
+
+                                <div class="form-group">
+                                    <label for="">Telefon Mobil: </label>
+                                    <input type="text" name="" class="form-control form-control-sm" value="{{ user.data('telefon') }}" />
+                                </div>
+
+                                <div class="form-group">
+                                    <label for="">Data nașterii: </label>
+                                    <input type="text" name="" class="form-control form-control-sm" value="{{ user.data('birthday')|date("d M Y") }}" />
+                                </div>
+
+                                <div class="form-group float-sm-right">
+                                    <input type="submit" value="Salveaza" class="btn btn-sm btn-info" />
+                                </div>
+                            </form>
+                        </div>
+                    </div>
+                </div>
+
+                <div class="col-md-12 mb-3">
+                    <h5>Adrese de livrare</h5>
+                    <div class="card">
+                        <div class="card-body">
+                            
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </div>
+{% endblock %}

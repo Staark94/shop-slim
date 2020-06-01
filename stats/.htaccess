@@ -1,0 +1,7 @@
+AuthName "shop-piesetv.ro statistics"
+AuthType Basic
+AuthUserFile /home/piesetv/.stats-htpasswd
+require valid-user
+<Files .stats-htpasswd>
+deny from all
+</Files>

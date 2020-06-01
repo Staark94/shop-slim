@@ -1,0 +1,19 @@
+{% extends 'templates/body.twig' %}
+{% block content %}
+	<div class="row mb-5">
+		<div class="col-lg">
+			{% for items in searchItems if searchItems is iterable %}
+			<div class="card mb-3">
+				<div class="card-body">
+					<h5><a href="{{ path_for('product.get', { slug: items.slug }) }}">{{ items.title }}</a></h5>
+					<p>Produs postat {{ items.created_at|date("d F Y, H:m a") }} in {{ items.productCategory()|raw }}</p>
+				</div>
+			</div>
+			{% else %}
+			<div class="alert-info p-2" style="border-radius: 3px">
+				Nu sau gasit rezultate...
+			</div>
+			{% endfor %}
+		</div>
+	</div>
+{% endblock %}

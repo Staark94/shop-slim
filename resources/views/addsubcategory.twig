@@ -1,0 +1,48 @@
+{% extends 'templates/body.twig' %}
+{% block content %}
+<div class="row">
+    <div class="col">
+        <form class="form" method="post" action="{{ path_for('admin.sub_cat.post') }}">
+            <div class="mb-5 card bg-light">
+                <div class="card-header">
+                    <h5><i class="fa fa-shopping-bag" aria-hidden="true"></i> Adauga o noua sub-categorie</h5>
+                </div>
+
+                <div class="card-body">
+                    <div class="form-group">
+                        <label>Parinte Sub-Categorie</label>
+                        <input type="text" name="cat_name" class="form-control" value="{{ result.cat.name }}" disabled />
+                    </div>
+
+                    <div class="form-group">
+                        <label>Nume Sub-Categorie</label>
+                        <input type="text" name="sub_cat_name" class="form-control" max="56" min="6" placeholder="Sub-Category Name" />
+                    </div>
+
+                    <div class="form-group">
+                        {% if result.subCat is empty %}
+                            Aceasta categorie nu are sub-categorii
+                        {% else %}
+                            <label>Pozitie Sub-Categorie</label>
+                            <select name="pos" class="custom-select">
+                                {% for item in result.subCat %}
+                                <option value="{{ item.id }}">
+                                    Dupa {{ item.name }}
+                                </option>
+                                {% endfor %}
+                            </select>
+                        {% endif %}
+                    </div>
+                </div>
+                
+                <div class="card-footer">
+                    <input type="hidden" name="cat_slug" value="{{ result.cat.slug }}" />
+                    <input type="hidden" name="cat_id" value="{{ result.cat.id }}" />
+                    <input type="submit" name="send" value="Save" class="btn btn-sm btn-info" />
+                    <input type="submit" name="cancel" value="Cancel" class="btn btn-sm btn-danger" />
+                </div>
+            </div>
+        </form>
+    </div>
+</div>
+{% endblock %}

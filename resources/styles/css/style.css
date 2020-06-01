@@ -1,0 +1,215 @@
+/*
+** Style Simple Ecommerce Theme for Bootstrap 4
+** Created by T-PHP https://t-php.fr/43-theme-ecommerce-bootstrap-4.html
+*/
+.bloc_left_price {
+    color: #c01508;
+    text-align: center;
+    font-weight: bold;
+    font-size: 150%;
+}
+.category_block li:hover {
+    background-color: #007bff;
+}
+.category_block li:hover a {
+    color: #ffffff;
+}
+.category_block li a {
+    color: #343a40;
+}
+.add_to_cart_block .price {
+    color: #c01508;
+    text-align: center;
+    font-weight: bold;
+    font-size: 200%;
+    margin-bottom: 0;
+}
+.add_to_cart_block .price_discounted {
+    color: #343a40;
+    text-align: center;
+    text-decoration: line-through;
+    font-size: 140%;
+}
+.product_rassurance {
+    padding: 10px;
+    margin-top: 15px;
+    background: #ffffff;
+    border: 1px solid #6c757d;
+    color: #6c757d;
+}
+.product_rassurance .list-inline {
+    margin-bottom: 0;
+    text-transform: uppercase;
+    text-align: center;
+}
+.product_rassurance .list-inline li:hover {
+    color: #343a40;
+}
+.reviews_product .fa-star {
+    color: gold;
+}
+.pagination {
+    margin-top: 20px;
+}
+footer {
+    background: #343a40;
+    padding: 40px;
+}
+footer a {
+    color: #f8f9fa!important
+}
+
+.hover {
+  z-index: 1;
+  position: absolute;
+  bottom: 0%;
+  text-align: center;
+  color: #282121;
+  background: #fdfdfde3;
+  width: 100%;
+  left: 0;
+}
+
+.hover .price {
+  display: block;
+  color: #d92612;
+}
+
+.hover[other="true"] {
+    bottom: 10%;
+    border-bottom: 1px solid #ddd;
+    margin-block: 5px;
+}
+
+.ef {
+	padding: 0 5px 3px;
+	position: relative;
+	top: 1px;
+	font-weight: 800;
+	border-radius: 2px;
+	background: rgb(0,33,36);
+	background: linear-gradient(0deg, rgb(219, 68, 240) 0%, rgb(219, 68, 240) 35%, rgb(219, 68, 240) 81%);
+}
+
+#history {
+    background: #e4f1f9;
+    border: 1px solid #eee;
+    border-radius: 3px;
+    box-shadow: 1px 1px 3px rgba(0,0,0,0.15);
+}
+
+div#history section {
+    margin: 15px 0 25px;
+    padding: 20px;
+    font-family: "Open Sans";
+    font-size: 14px;
+    background-color: #fff;
+    -webkit-border-radius: 5px;
+    -moz-border-radius: 5px;
+    border-radius: 5px;
+    -webkit-box-shadow: 0px 2px 2px 0px rgba(27,27,27,0.2);
+    -moz-box-shadow: 0px 2px 2px 0px rgba(27,27,27,0.2);
+    box-shadow: 0px 2px 2px 0px rgba(27,27,27,0.2);
+    line-height: 10px;
+}
+
+div#history section p {
+    font-size: 14px;
+}
+
+p.order-vendor-list-shipping-status {
+    font-weight: bold;
+    color: #10B2F8;   
+}
+
+h1.order-hist-title {
+    margin-top: 4px;
+    font-family: "Open Sans";
+    font-size: 30px;
+}
+
+.product-gallery > img {
+    width: 80px;
+    height: 80px;
+    background: white;
+    padding: 1px;
+    border: 1px solid #33333347;
+}
+
+.modal-body img {
+    width: 100%;
+}
+
+.ads {
+    display: block;
+    margin: 0 auto 30px;
+    width: 90%;
+    text-align: center;
+}
+
+.user-thumbnail {
+    width: 100px;
+    display: block;
+    height: 100px;
+    margin: 0 auto;
+    border: 1px solid #29292961;
+    border-radius: 3px;
+    padding: 1px;
+
+    background: #f2825b; /* Old browsers */
+    background: -moz-linear-gradient(top,  #f2825b 0%, #e55b2b 50%, #f07146 100%); /* FF3.6-15 */
+    background: -webkit-linear-gradient(top,  #f2825b 0%,#e55b2b 50%,#f07146 100%); /* Chrome10-25,Safari5.1-6 */
+    background: linear-gradient(to bottom,  #f2825b 0%,#e55b2b 50%,#f07146 100%); /* W3C, IE10+, FF16+, Chrome26+, Opera12+, Safari7+ */
+    filter: progid:DXImageTransform.Microsoft.gradient( startColorstr='#f2825b', endColorstr='#f07146',GradientType=0 ); /* IE6-9 */
+}
+
+.user-thumbnail::after {
+    color: white;
+    content: "SHOP";
+    margin: 50% auto;
+    line-height: 6rem;
+}
+
+.category_block li:hover::before {
+    content: "»";
+    color: white;
+    margin-right: 5px;
+}
+
+.list-group-item:first-child {
+    border-top-left-radius: 0;
+    border-top-right-radius: 0;
+}
+
+img.img-fluid {
+    padding: 1px;
+    background-color: #333;
+    border-radius: 5px;
+    border-color: #8BC34A;
+    border: 1px solid #8bc34a;
+}
+
+h5.card-title {
+    text-align: center;
+    font-size: 16px;
+    margin: 5px auto;
+    text-shadow: 1px 1px 1px #949494;
+}
+
+p.card-text.text-center {
+    margin: 5px auto;
+    padding-top: 10px;
+    position: relative;
+    top: 2px;
+}
+
+.card-body ul {
+    margin: 0;
+    padding: 0;
+}
+
+.product-properties {
+    display: table-row;
+    width: 50% !important;
+    font-size: 12px;
+}

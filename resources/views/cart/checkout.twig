@@ -1,0 +1,300 @@
+{% extends 'templates/body.twig' %}
+{% block content %}
+<div class="row mb-4">
+    <div class="col-md-4 order-md-2 mb-4">
+        <h4 class="d-flex justify-content-between align-items-center mb-3">
+            <span class="text-muted">Produse in cos</span>
+            <span class="badge badge-secondary badge-pill">{{ basket.itemCount }}</span>
+        </h4>
+
+        <ul class="list-group mb-3">
+            {% for item in basket.all() %}
+            <li class="list-group-item d-flex justify-content-between lh-condensed">
+                <div>
+                    <h6 class="my-0">{{ item.title }}</h6>
+                </div>
+                <span class="text-muted">{{ item.price * item.quantity }} RON</span>
+            </li>
+            {% endfor %}
+    
+            <li class="list-group-item d-flex justify-content-between bg-light">
+                <div class="text-success">
+                <h6 class="my-0">Promo code</h6>
+                <small></small>
+                </div>
+                <span class="text-success">0 RON</span>
+            </li>
+            <li class="list-group-item d-flex justify-content-between">
+                <span>Total (RON)</span>
+                <strong>{{ basket.totalPrice }} RON</strong>
+            </li>
+        </ul>
+        <form class="card p-2">
+            <div class="input-group">
+                <input type="text" class="form-control" placeholder="Promo code">
+                <div class="input-group-append">
+                    <button type="submit" class="btn btn-secondary">Foloseste</button>
+                </div>
+            </div>
+        </form>
+    </div>
+
+    {% if not customer.logged() %}
+    <div class="col-md-8 order-md-1">
+        <form action="{{ path_for('cart.order.post') }}" method="POST">
+            <div class="row">
+                <div class="col-md-4">
+                    <h4 class="mb-3">Creare cont</h4>
+                    <div class="form-group">
+                        Ai deja un cont? <a href="{{ path_for('auth.login') }}">Conecteaza-te</a>
+                    </div>
+
+
+                    <div class="form-group">
+                        <label for="userNow">Nume & Prenume</label>
+                        <input type="text" class="form-control" name="userNow" placeholder="" value="">
+                    </div>
+                    <div class="form-group mb-3">
+                        <label for="emailNow">Email</label>
+                        <input type="text" class="form-control" name="emailNow" placeholder="" value="">
+                    </div>
+                </div>
+
+                <div class="col-md-8">
+                    <h4 class="mb-3">Adresa de livrare</h4>
+                    <div class="alert alert-info alert-dismissible fade show" role="alert">
+                    <button type="button" class="close" data-dismiss="alert" aria-label="Close">
+                        <span aria-hidden="true">&times;</span>
+                    </button>
+                    <strong>Completati cu atentie toate datele</strong> 
+                    </div>
+                    
+                    <script>
+                        $(".alert").alert();
+                    </script>
+
+                    <div class="row">
+                            <div class="col-md-6 mb-3">
+                                <label for="firstName">Nume</label>
+                                <input type="text" class="form-control" name="firstName" placeholder="" value="">
+                            </div>
+                            <div class="col-md-6 mb-3">
+                                <label for="lastName">Prenume</label>
+                                <input type="text" class="form-control" name="lastName" placeholder="" value="">
+                            </div>
+                        </div>
+
+                        <div class="mb-3">
+                            <label for="email">Email</label>
+                            <input type="email" class="form-control" name="email" placeholder="you@example.com">
+                        </div>
+
+                        <div class="mb-3">
+                            <label for="address">Adresa</label>
+                            <input type="text" class="form-control" name="address" placeholder="">
+                        </div>
+
+                        <div class="mb-3">
+                            <label for="address">Telefon</label>
+                            <input type="tel" pattern="[0-9]{3}[0-9]{3}[0-9]{4}" class="form-control" name="telefon" placeholder="">
+                            <small>Format: 07265682020</small>
+                        </div>
+
+                        <div class="row">
+                            <div class="col-md-5 mb-3">
+                                <label for="country">Tara</label>
+                                <select class="custom-select d-block w-100" name="country">
+                                    <option value="">Alege...</option>
+                                    <option>Romania</option>
+                                </select>
+                            </div>
+
+                            <div class="col-md-4 mb-3">
+                                <label for="state">Oras</label>
+                                <select class="custom-select d-block w-100" name="state">
+                                    <option value="">Alege...</option>
+                                    <option value="București">București</option>
+                                    <option value="Alba">Alba</option>
+                                    <option value="Arad">Arad</option>
+                                    <option value="Argeș">Argeș</option>
+                                    <option value="Bacau">Bacau</option>
+                                    <option value="Bihor">Bihor</option>
+                                    <option value="Bistrița-Năsăud">Bistrița-Năsăud</option>
+                                    <option value="Botoșani">Botoșani</option>
+                                    <option value="Brașov">Brașov</option>
+                                    <option value="Brăila">Brăila</option>
+                                    <option value="Buzău">Buzău</option>
+                                    <option value="Călărași">Călărași</option>
+                                    <option value="Cluj">Cluj</option>
+                                    <option value="Constanța">Constanța</option>
+                                    <option value="Iași">Iași</option>
+                                    <option value="Ilfov">Ilfov</option>
+                                    <option value="Neamț">Neamț</option>
+                                    <option value="Prahova">Prahova</option>
+                                    <option value="Sibiu">Sibiu</option>
+                                    <option value="Suceava">Suceava</option>
+                                    <option value="Tulcea">Tulcea</option>
+                                    <option value="Vrancea">Vrancea</option>
+                                </select>
+                            </div>
+
+                            <div class="col-md-3 mb-3">
+                                <label for="zip">Cod Postal</label>
+                                <input type="text" class="form-control" name="zip" placeholder="">
+                            </div>
+                        </div>
+                        <hr class="mb-4">
+                        <div class="custom-control custom-checkbox">
+                            <input type="checkbox" class="custom-control-input" name="same-address" id="same-address">
+                            <label class="custom-control-label" for="same-address">Adresa de expediere este aceeași cu adresa mea de facturare</label>
+                        </div>
+
+                        <div class="custom-control custom-checkbox">
+                            <input type="checkbox" class="custom-control-input" name="save-info" id="save-info">
+                            <label class="custom-control-label" for="save-info">Salveaza informatiile pentru urmatoarele comenzii</label>
+                        </div>
+                        <hr class="mb-4">
+                        <h4 class="mb-3">Metoda livrare produse</h4>
+                        <div class="d-block my-3">
+                            <div class="custom-control custom-radio">
+                                <input id="curier" name="paymentMethod1" type="radio" class="custom-control-input">
+                                <label class="custom-control-label" for="curier">Fan Curier (Ramburs)</label>
+                            </div>
+
+                            <div class="custom-control custom-radio">
+                                <input id="posta" name="paymentMethod2" type="radio" class="custom-control-input">
+                                <label class="custom-control-label" for="posta">Posta Romana (Ramburs)</label>
+                            </div>
+                        </div>
+
+
+                        <hr class="mb-4">
+                        <button class="btn btn-primary btn-lg btn-block" type="submit">Finalizeaza comanda</button>
+                </div>
+            </div>
+        </form>
+    </div>
+    {% else %}
+    <div class="col-md-8 order-md-1">
+        {% if customer.logged() %}
+            Aveti deja o adresa de facturare salvata vreti sa o folositi?
+            <a name="" id="" class="btn btn-primary" href="#" role="button">
+                Foloseste
+            </a>
+            <hr>
+        {% endif %}
+
+        <h4 class="mb-3">Adresa de livrare</h4>
+        <div class="alert alert-info alert-dismissible fade show" role="alert">
+          <button type="button" class="close" data-dismiss="alert" aria-label="Close">
+            <span aria-hidden="true">&times;</span>
+          </button>
+          <strong>Completati cu atentie toate datele</strong> 
+        </div>
+        
+        <script>
+            $(".alert").alert();
+        </script>
+        <form action="{{ path_for('cart.order.post') }}" method="POST">
+            <div class="row">
+                <div class="col-md-6 mb-3">
+                    <label for="firstName">Nume</label>
+                    <input type="text" class="form-control" name="firstName" placeholder="" value="">
+                </div>
+                <div class="col-md-6 mb-3">
+                    <label for="lastName">Prenume</label>
+                    <input type="text" class="form-control" name="lastName" placeholder="" value="">
+                </div>
+            </div>
+
+            <div class="mb-3">
+                <label for="email">Email</label>
+                <input type="email" class="form-control" name="email" placeholder="you@example.com">
+            </div>
+
+            <div class="mb-3">
+                <label for="address">Adresa</label>
+                <input type="text" class="form-control" name="address" placeholder="">
+            </div>
+
+            <div class="mb-3">
+                <label for="address">Telefon</label>
+                <input type="tel" pattern="[0-9]{3}[0-9]{3}[0-9]{4}" class="form-control" name="telefon" placeholder="">
+                <small>Format: 07265682xxx</small>
+            </div>
+
+            <div class="row">
+                <div class="col-md-5 mb-3">
+                    <label for="country">Tara</label>
+                    <select class="custom-select d-block w-100" name="country">
+                        <option value="">Alege...</option>
+                        <option>Romania</option>
+                    </select>
+                </div>
+
+                <div class="col-md-4 mb-3">
+                    <label for="state">Oras</label>
+                    <select class="custom-select d-block w-100" name="state">
+                        <option value="">Alege...</option>
+                        <option value="București">București</option>
+                        <option value="Alba">Alba</option>
+                        <option value="Arad">Arad</option>
+                        <option value="Argeș">Argeș</option>
+                        <option value="Bacau">Bacau</option>
+                        <option value="Bihor">Bihor</option>
+                        <option value="Bistrița-Năsăud">Bistrița-Năsăud</option>
+                        <option value="Botoșani">Botoșani</option>
+                        <option value="Brașov">Brașov</option>
+                        <option value="Brăila">Brăila</option>
+                        <option value="Buzău">Buzău</option>
+                        <option value="Călărași">Călărași</option>
+                        <option value="Cluj">Cluj</option>
+                        <option value="Constanța">Constanța</option>
+                        <option value="Iași">Iași</option>
+                        <option value="Ilfov">Ilfov</option>
+                        <option value="Neamț">Neamț</option>
+                        <option value="Prahova">Prahova</option>
+                        <option value="Sibiu">Sibiu</option>
+                        <option value="Suceava">Suceava</option>
+                        <option value="Tulcea">Tulcea</option>
+                        <option value="Vrancea">Vrancea</option>
+                    </select>
+                </div>
+
+                <div class="col-md-3 mb-3">
+                    <label for="zip">Cod Postal</label>
+                    <input type="text" class="form-control" name="zip" placeholder="">
+                </div>
+            </div>
+            <hr class="mb-4">
+            <div class="custom-control custom-checkbox">
+                <input type="checkbox" class="custom-control-input" name="same-address" id="same-address">
+                <label class="custom-control-label" for="same-address">Adresa de expediere este aceeași cu adresa mea de facturare</label>
+            </div>
+
+            <div class="custom-control custom-checkbox">
+                <input type="checkbox" class="custom-control-input" name="save-info" id="save-info">
+                <label class="custom-control-label" for="save-info">Salveaza informatiile pentru urmatoarele comenzii</label>
+            </div>
+            <hr class="mb-4">
+            <h4 class="mb-3">Metoda livrare produse</h4>
+            <div class="d-block my-3">
+                <div class="custom-control custom-radio">
+                    <input id="curier" name="paymentMethod1" type="radio" class="custom-control-input">
+                    <label class="custom-control-label" for="curier">Fan Curier (Ramburs)</label>
+                </div>
+
+                <div class="custom-control custom-radio">
+                    <input id="posta" name="paymentMethod2" type="radio" class="custom-control-input">
+                    <label class="custom-control-label" for="posta">Posta Romana (Ramburs)</label>
+                </div>
+            </div>
+
+
+            <hr class="mb-4">
+            <button class="btn btn-primary btn-lg btn-block" type="submit">Finalizeaza comanda</button>
+        </form>
+    </div>
+    {% endif %}
+</div>
+{% endblock %}

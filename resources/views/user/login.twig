@@ -1,0 +1,39 @@
+{% extends 'templates/body.twig' %}
+{% block content %}
+    <div class="row d-flex justify-content-center">
+        <div class="col-md-4 col-sm-4">
+            <div class="col">
+                <h3>Login Customer</h3>
+            </div>
+
+            {% if errors is not empty %}
+            <div class="alert alert-danger" role="alert">
+                {% if errors.user is not empty %}<strong>{{ errors.user|raw }}</strong><br />{% endif %}
+                {% if errors.session is not empty %}<strong>{{ errors.session|raw }}</strong><br />{% endif %}
+                {% if errors.wrong is not empty %}<strong>{{ errors.wrong|raw }}</strong><br />{% endif %}
+            </div>
+            {% endif %}
+            
+            <form action="{{ auth.login.post }}" method="POST">
+                <div class="form-group">
+                    <label for="">Email</label>
+                    <input type="email" name="email" class="form-control" />
+                </div>
+
+                <div class="form-group">
+                    <label for="">Password</label>
+                    <input type="password" name="password" class="form-control" />
+                </div>
+
+                <div class="form-group">
+                    Nu ai cont? <a href="{{ path_for('auth.register') }}">Creaza</a> acum unul gratuit.
+                </div>
+
+                <div class="form-group">
+                    <input type="submit" name="login" class="btn btn-sm btn-primary" value="Login" />
+                    <input type="hidden" name="redirect" value="{{ path_for('index') }}" />
+                </div>
+            </form>
+        </div>
+    </div>
+{% endblock %}

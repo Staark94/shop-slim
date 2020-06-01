@@ -1,0 +1,59 @@
+{% extends 'templates/body.twig' %}
+{% block content %}
+	<div class="row">
+		<div class="col-lg col-sm-6">
+			<h5>Contacteaza-ne</h5>
+
+			{% if post and errors is empty %}
+			<div class="alert alert-success" role="alert">
+			Mesajul dvs. a fost transmis cu succes catre echipa administrativa, va rugam sa asteptati un raspuns din partea unui administrator/operator.<br />
+			Va multumim pentru ca ne-ati contactat.
+			</div>
+			{% else %}
+			<form name="contact" action="{{ path_for('contact.post') }}" method="POST" class="form-block card-body">
+				{% if errors is not empty %}
+					<div class="alert alert-danger" role="alert">
+						{% for t in errors %}
+							{{ t|raw }}<br />
+						{% endfor %}
+					</div>
+				{% endif %}
+				<div class="form-group">
+					<div class="input-group mb-2 mr-sm-2">
+						<div class="input-group-prepend">
+							<div class="input-group-text"><i class="fa fa-address-book" aria-hidden="true"></i></div>
+						</div>
+						<input type="text" name="userName" id="userName" class="form-control" placeholder="Popescu Ion" />
+					</div>
+				</div>
+
+				<div class="form-group">
+					<div class="input-group mb-2 mr-sm-2">
+						<div class="input-group-prepend">
+							<div class="input-group-text"><i class="fa fa-envelope" aria-hidden="true"></i></div>
+						</div>
+						<input type="email" name="userMail" id="userMail" class="form-control" placeholder="popescuion@mail.com" />
+					</div>
+				</div>
+
+				<div class="form-group">
+					<div class="input-group mb-2 mr-sm-2">
+						<div class="input-group-prepend">
+							<div class="input-group-text"><i class="fa fa-commenting" aria-hidden="true"></i></div>
+						</div>
+						<textarea name="msgText" class="form-control" rows="3" placeholder="Mesajul dvs."></textarea>
+					</div>
+				</div>
+
+				<div class="form-group">
+					<input type="hidden" name="r" value="{{ path_for('index') }}" />
+					<input type="hidden" name="u" value="{{ customer.user() }}" />
+					<input type="hidden" name="d" value="{{ now|date("m d Y, H:i a") }}" />
+
+					<input type="submit" name="submit" value="Trimite Mesajul" class="btn btn-sm btn-info pl-4 pr-4" />
+				</div>
+			</form>
+			{% endif %}
+		</div>
+	</div>
+{% endblock %}

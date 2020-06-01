@@ -1,0 +1,129 @@
+{% extends 'templates/body.twig' %}
+{% block content %}
+<div class="row">
+    <div class="col">
+
+    
+    <div class="mb-5 card bg-light">
+        <div class="card-header">
+            <h5><i class="fa fa-shopping-bag" aria-hidden="true"></i> Modifica un produs</h5>
+        </div>
+        <form action="{{ path_for('product.modify.post') }}" method="post" class="form-block card-body" enctype="multipart/form-data">
+            <div class="row">
+                {% if errors %}
+                <div class="col-sm-12">
+                    <div class="alert alert-danger" role="alert">
+                        {% for error in errors %}
+                        <strong>{{ error.msg }}</strong><br />
+                        {% endfor %}
+                    </div>
+                </div>
+                {% endif %}
+                <div class="col-sm-6">
+                    <div class="form-group">
+                        <label class="text-danger" for="title">Nume Produs:* </label>
+                        <input type="text" name="title" id="title" class="form-control" value="{{ product.title }}" />
+                    </div>
+                </div>
+
+                <div class="col-sm-6">
+                    <div class="form-group">
+                        <label class="text-danger" for="category">Categorie Produs:* </label>
+                        <select name="selected" id="category" class="custom-select">
+                            {% for items in cat %}
+                            <option {% if items.id == product.category %}selected="selected"{% endif %} value="{{ items.name }}">{{ items.name }}</option>
+                                {% for sub in subcat.subCat(items.id) %}
+                                <option {% if sub.id == product.sub_category %}selected="selected"{% endif %} value="{{ sub.name }}">&nbsp;&nbsp;&nbsp;- {{ sub.name }}</option>
+                                {% endfor %}
+                            {% endfor %}
+                        </select>
+                    </div>
+                </div>
+            </div>
+
+            <div class="row">
+                <div class="col-sm-4">
+                    <div class="form-group">
+                        <label class="text-danger" for="price">Pret Produs:* </label>
+                        <input type="text" name="price" min="1" max="999" id="price" class="form-control" value="{{ product.price }}" />
+                    </div>
+                </div>
+
+                <div class="col-sm-4">
+                    <div class="form-group">
+                        <label class="text-danger" for="stock">Stock Produs:*</label>
+                        <input type="number" name="stock" value="1" min="1" max="10" id="stock" class="form-control" value="{{ product.stock }}" />
+                    </div>
+                </div>
+
+                <div class="col-sm-4 mt-4">
+                    <div class="form-group">
+                        <div class="custom-file mt-2">
+                            <input type="file" name="images[]" multiple="multiple" class="custom-file-input" id="validatedCustomFile" />
+                            <label class="custom-file-label" for="validatedCustomFile">Adauga poza(e)..</label>
+                        </div>
+                    </div>
+                </div>
+
+                <div class="col-sm-4 mt-4">
+                    <div class="form-group">
+                      <div class="input-group mb-2 mr-sm-2">
+                        <div class="input-group-prepend">
+                          <div class="input-group-text"><i class="fa fa-phone" aria-hidden="true"></i></div>
+                        </div>
+                        <input type="text" name="telefon" class="form-control" id="inlineFormInputGroupUsername2" placeholder="Telefon" required />
+                      </div>
+                    </div>
+                </div>
+            </div>
+
+            <div class="form-group">
+                <label class="text-danger" for="description">Descriere Produs:* </label>
+                <textarea name="description" id="description" cols="80" rows="10" class="form-control">{{ product.description }}</textarea>
+            </div>
+
+            {% if product.image %}
+            <div class="form-group">
+                <table class="table" style="border: 1px solid #33333336;">
+                    <thead>
+                        <tr>
+                            <th>Link</th>
+                            <th>Type</th>
+                            <th>Date Add</th>
+                        </tr>
+                    </thead>
+
+                    <tbody>
+                        <tr>
+                            <td>{{ product.getImage() }}</td>
+                            <td>-</td>
+                            <td>{{ product.date() }}</td>
+                        </tr>
+
+                        {% for item in product.getGallery() %}
+                        <tr>
+                            <td>{{ item }}</td>
+                            <td>Gallery</td>
+                            <td>{{ product.date() }}</td>
+                        </tr>
+                        {% endfor %}
+                    </tbody>
+                </table>
+            </div>
+            {% endif %}
+
+            <div class="form-group">
+                <input type="submit" value="Modifica" class="btn btn-block btn-info" />
+                <input type="hidden" name="f" value="{{ product.id }}" />
+                <input type="hidden" name="mode" value="" />
+            </div>
+        </form>
+    </div>
+
+    </div>
+</div>
+<script src="//cdn.ckeditor.com/4.12.1/full/ckeditor.js"></script>
+<script>
+    CKEDITOR.replace('description');
+</script>
+{% endblock %}

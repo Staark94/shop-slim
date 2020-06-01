@@ -1,0 +1,46 @@
+{% extends 'templates/body.twig' %}
+{% block content %}
+<div class="row">
+    <div class="col">
+        <form class="form" method="get" action="{{ path_for('admin.sub_cat') }}">
+            <div class="mb-5 card bg-light">
+                <div class="card-header">
+                    <h5><i class="fa fa-shopping-bag" aria-hidden="true"></i> Adauga o noua sub-categorie</h5>
+                </div>
+
+                <div class="card-body">
+                    <h5>Parinte Sub-Categorie</h5>
+                    {% if result %}
+                        <select name="category" class="custom-select mb-3">
+                            {% for item in result.cat %}
+                                <option value="{{ item.id }}">
+                                    {{ item.name }}
+                                </option>
+                            {% endfor %}
+                        </select>
+                    {% endif %}
+                    
+                    {% if result %}
+                        <h5>Sub Categorii</h5>
+                        
+                        {% if result.subCat is iterable %}
+                        <div class="overflow-auto p-3 bg-white text-dark" style="width: 40%; border: 1px solid #ddd;">
+                        {% for item in result.subCat %}
+                            <span class="small">{{ item.name }} - {{ subcat.catName(item.parent) }}</span><br>
+                        {% endfor %}
+                        </div>
+                        {% else %}
+                        Nu sunt create sub-categorii.
+                        {% endif %}
+                    {% endif %}
+                </div>
+
+                <div class="card-footer">
+                    <input type="submit" value="Save" class="btn btn-sm btn-info" />
+                    <input type="submit" name="cancel" value="Cancel" class="btn btn-sm btn-danger" />
+                </div>
+            </div>
+        </form>
+    </div>
+</div>
+{% endblock %}

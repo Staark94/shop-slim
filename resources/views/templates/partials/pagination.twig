@@ -1,0 +1,9 @@
+<nav aria-label="category">
+    <ul class="pagination">
+        {% for i in 1..pagination.lastpage %}
+        <li class="page-item {% if i == pagination.page %}active{% endif %}">
+            <a class="page-link" href="?page={{ i }}">{{ i }}</a>
+        </li>
+        {% endfor %}
+    </ul>
+</nav>

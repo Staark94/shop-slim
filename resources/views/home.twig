@@ -1,0 +1,53 @@
+{% extends 'templates/body.twig' %}
+{% block content %}
+	<div class="row">
+		<div class="col-12 col-sm-3">
+			<div class="card bg-light mb-3">
+				<div class="card-header bg-success text-white text-uppercase">Like daca iti place pagina</div>
+				<div class="card-body">
+				 	<div id="fb-root"></div>
+					<script async defer crossorigin="anonymous" src="https://connect.facebook.net/ro_RO/sdk.js#xfbml=1&version=v4.0&appId=348296549388107&autoLogAppEvents=1"></script>
+
+					<div class="fb-page" data-href="https://www.facebook.com/shop.piesetv" data-tabs="" data-width="225" data-height="" data-small-header="false" data-adapt-container-width="true" data-hide-cover="false" data-show-facepile="false"><blockquote cite="https://www.facebook.com/shop.piesetv" class="fb-xfbml-parse-ignore"><a href="https://www.facebook.com/shop.piesetv">Shop-piesetv.ro</a></blockquote></div>
+				</div>
+			</div>
+
+			<div class="card bg-light mb-3">
+				<div class="card-header bg-primary text-white text-uppercase"><i class="fa fa-list"></i> Categorie</div>
+				<ul class="list-group category_block">
+					{% for cat in cats %}<li class="list-group-item"><a href="/category/{{ cat.slug }}">{{ cat.name }}</a></li>{% endfor %}
+				</ul>
+			</div>
+			{% if last_product %}
+			<div class="card bg-light mb-3">
+				<div class="card-header bg-success text-white text-uppercase">Produs nou adaugat</div>
+				<div class="card-body">
+					<a href="{{ path_for('product.get', {slug: last_product.slug}) }}"><img class="img-fluid" src="{{ last_product.getImage() }}" /></a>
+					<h5 class="card-title">{{ last_product.title }}</h5>
+					<p class="card-text">{{ last_product.description | raw }}</p>
+					<p class="bloc_left_price">{{ last_product.price }} RON</p>
+				</div>
+			</div>
+			{% endif %}
+		</div>
+
+        <div class="col">
+			<div class="row">
+				{% for cat in cats %} {% if cat.getProducts(cat.id, 3) | length %}
+				<div class="col-lg-12 mb-5">
+					<h5>{{ cat.name }}</h5>
+					<hr>
+					<div class="row">
+					{% for product in cat.getProducts(cat.id, 3) %}
+						<div class="col-md-4 col-sm-6">
+							{% include 'products/items.twig' with {product: product} %}
+						</div>
+					{% endfor %}
+					</div>
+					
+				</div>{% endif %}
+				{% endfor %}
+			</div>
+		</div>
+	</div>
+{% endblock %}

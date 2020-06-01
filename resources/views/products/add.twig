@@ -1,0 +1,146 @@
+{% extends 'templates/body.twig' %}
+{% block content %}
+<div class="row">
+    <div class="col">
+
+    
+    <div class="mb-5 card bg-light">
+        <div class="card-header">
+            <h5><i class="fa fa-shopping-bag" aria-hidden="true"></i> Adauga un produs nou</h5>
+        </div>
+
+        {% if sessions.get('fb.state') is empty %}
+        <form action="#" class="form-block card-body">
+            <label class="text-info" for="title">Vrei ca aceasta postare sa apara pe facebook?</label>
+            <br />
+            <a href="{{ fbLogin }}" id="fb_button"><i class="fa fa-facebook-official" aria-hidden="true"></i> Asociaza cont</a>
+        </form>
+        <hr style="margin-top: 0rem;">
+        {% else %}
+        <form action="{{ fbLogin }}" method="get" class="form-block card-body">
+            <span class="text-info">Ai asociat un cont facebook, postarile vor aparea pe pagina <b><a href="https://www.facebook.com/shop.piesetv/">Shop-piesetv.ro</a></b>.
+            </span>
+        </form>
+        <hr style="margin-top: 0rem;">
+        {% endif %}
+
+        <form action="{{ path_for('product.new.post') }}" method="post" class="form-block card-body" enctype="multipart/form-data">
+            <div class="row">
+                {% if errors %}
+                <div class="col-sm-12">
+                    <div class="alert alert-danger" role="alert">
+                        {% for error in errors %}
+                        <strong>{{ error.msg }}</strong><br />
+                        {% endfor %}
+                    </div>
+                </div>
+                {% endif %}
+                <div class="col-sm-6">
+                    <div class="form-group">
+                        <label class="text-danger" for="title">Nume Produs:* </label>
+                        <input type="text" name="title" id="title" class="form-control" />
+                    </div>
+                </div>
+
+                <div class="col-sm-6">
+                    <div class="form-group">
+                        <label class="text-danger" for="category">Categorie Produs:* </label>
+                        
+                        <select name="selected" id="category" class="custom-select">
+                            <option value="0">Selecteaza...</option>
+                            {% for items in cat %}
+                            <option value="{{ items.name }}">{{ items.name }}</option>
+                                {% for sub in subcat.subCat(items.id) %}
+                                <option value="{{ sub.name }}">&nbsp;&nbsp;&nbsp;- {{ sub.name }}</option>
+                                {% endfor %}
+                            {% endfor %}
+                        </select>
+                    </div>
+                </div>
+            </div>
+
+            <div class="row">
+                <div class="col-sm-4">
+                    <div class="form-group">
+                        <label class="text-danger" for="price">Pret Produs:* </label>
+                        <input type="text" name="price" min="1" max="999" id="price" class="form-control" />
+                    </div>
+                </div>
+
+                <div class="col-sm-4">
+                    <div class="form-group">
+                        <label class="text-danger" for="stock">Stock Produs:*</label>
+                        <input type="number" name="stock" value="1" min="1" max="10" id="stock" class="form-control" />
+                    </div>
+                </div>
+
+                <div class="col-sm-4 mt-4">
+                    <div class="form-group">
+                        <div class="custom-file mt-2">
+                            <input type="file" name="images[]" multiple="multiple" class="custom-file-input" id="validatedCustomFile" required />
+                            <label class="custom-file-label" for="validatedCustomFile">Choose file...</label>
+                        </div>
+                    </div>
+                </div>
+
+                <div class="col-sm-4 mt-4">
+                    <div class="form-group">
+                      <div class="input-group mb-2 mr-sm-2">
+                        <div class="input-group-prepend">
+                          <div class="input-group-text"><i class="fa fa-phone" aria-hidden="true"></i></div>
+                        </div>
+                        <input type="text" name="telefon" class="form-control" id="inlineFormInputGroupUsername2" placeholder="Telefon" required />
+                      </div>
+                    </div>
+                </div>
+            </div>
+
+            <div class="form-group">
+                <label class="text-danger" for="description">Descriere Produs:* </label>
+                <textarea name="description" id="description" cols="80" rows="10" class="form-control"></textarea>
+
+            </div>
+
+            <div class="form-group">
+                <input type="submit" value="Adauga" class="btn btn-block btn-info" />
+                <input type="hidden" name="" />
+                <input type="hidden" name="" />
+            </div>
+        </form>
+    </div>
+
+    </div>
+</div>
+<script src="//cdn.ckeditor.com/4.12.1/full/ckeditor.js"></script>
+<script>
+    CKEDITOR.replace('description');
+</script>
+
+<style>
+#fb_button {
+    position: relative;
+    padding-left: 4px;
+    text-align: left;
+    white-space: nowrap;
+    overflow: hidden;
+    text-overflow: ellipsis;
+    color: #fff;
+    background-color: #3b5998;
+    border-color: rgba(0,0,0,0.2);
+    border-radius: 3px;
+    display: inline-block;
+    width: auto;
+    padding: 5px 24px 5px 10px;
+    text-align: center;
+}
+
+#fb_button i {
+    font-size: 21px;
+    float: left;
+    position: relative;
+    padding-right: 5px;
+    margin: 1px 5px 1px 1px;
+    border-right: 1px solid #ffffffa6;
+}
+</style>
+{% endblock %}

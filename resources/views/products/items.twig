@@ -1,0 +1,23 @@
+<div class="card m-2">
+    <a class="align-self-center" href="{{ path_for('product.get', { slug: product.getSlug() }) }}">
+        <img style="width: 200px; height: 200px" class="img-thumbnail m-2 card-img-top" src="{{ product.getImage() }}" alt="" />
+    
+        <div class="hover" {% if product.outOfStock() or product.hasLowStock() %}other="true"{% endif %}>
+            <span class="title">{{ product.title }}</span>
+            <span class="price">{{ product.price }} RON</span>
+            {% if product.price < product.old_price %}
+            <span class="text-warning mt-1">Old Price: <strike>{{ product.old_price }} RON</strike><br />
+            {% endif %}
+        </div>
+
+        <p class="card-text text-center mb-1">
+            {% if product.hasLowStock() %}
+                <span class="badge badge-warning">Stoc limitat: {{ product.stock }}</span>
+            {% endif %}
+
+            {% if product.outOfStock() %}
+                <span class="badge badge-danger">Stoc epuizat</span>
+            {% endif %}
+        </p>
+    </a>
+</div>

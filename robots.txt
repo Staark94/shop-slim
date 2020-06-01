@@ -1,0 +1,5 @@
+Allow
+Crawl-delay: 
+Sitemap: https://shop-piesetv.ro/sitemaxp.xml
+User-agent: *
+Allow :/

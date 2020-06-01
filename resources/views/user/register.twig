@@ -1,0 +1,49 @@
+{% extends 'templates/body.twig' %}
+{% block content %}
+<div class="row d-flex justify-content-center">
+    <div class="col-md-8">
+        <h5><i class="fa fa-user" aria-hidden="true"></i> Înregistrarea unui nou client </h5>
+    </div>
+    <div class="col-md-8 col-sm-4 mb-5">
+        <form action="{{ path_for('auth.register.post') }}" method="post" class="form-block-row">
+            <div class="card bg-light">
+                <div class="card-header">
+                    Date personale
+                </div>
+
+                <div class="card-body">
+                    <div class="form-group col-md-12">
+                        <label for="name">Nume Utilizator: *</label>
+                        <input type="text" name="name" id="name" class="form-control" />
+                    </div>
+
+                    <div class="form-group col-md-12">
+                        <label for="password">Parola: *</label>
+                        <input type="password" name="password" id="password" class="form-control" />
+                    </div>
+
+                    <div class="form-group col-md-12">
+                        <label for="email">E-Mail: *</label>
+                        <input type="email" name="email" id="email" class="form-control" />
+                    </div>
+
+                    
+                    <div class="form-group col-md-12">
+                        <label for="address1">Localitate: *</label>
+                        <input type="text" name="address1" id="address1" class="form-control" />
+                    </div>
+
+                    <div class="form-group col-md-12">
+                        <label for="address2">Judet: *</label>
+                        <input type="text" name="address2" id="address2" class="form-control" />
+                    </div>
+
+                    <div class="form-group col-md-12">
+                        <input type="submit" value="Inscriere" class="btn btn-sm btn-info" />
+                    </div>
+                </div>
+            </div>
+        </form>
+    </div>
+</div>
+{% endblock %}

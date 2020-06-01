@@ -1,0 +1,65 @@
+{% extends 'templates/body.twig' %}
+{% block content %}
+<div class="row mb-4">
+    <div class="col-mb-8">
+        <h5>Comanda dvs. a fost plasata.</h5>
+    </div>
+    <div class="col-md-4">
+        <hr>
+        <h4>Adresa de livrare</h4>
+        
+        <dl>
+            <dt>Nume & Prenume:</dt>
+            <dd>{{ address.firstName }} {{ address.lastName }}</dd>
+        </dl>
+
+        <dl>
+            <dt>Email:</dt>
+            <dd>{{ address.email }}</dd>
+        </dl>
+
+        <dl>
+            <dt>Adresa:</dt>
+            <dd>{{ address.state }}, {{ address.address }}</dd>
+        </dl>
+
+        <dl>
+            <dt>Telefon:</dt>
+            <dd>{{ address.telefon }}</dd>
+        </dl>
+
+        <dl>
+            <dt>Cod Postal</dt>
+            <dd>{{ address.zip }}</dd>
+        </dl>
+    </div>
+
+    <div class="col-md-6">
+        <table class="table">
+            <thead>
+                <tr>
+                    <th>Produs</th>
+                    <th>Cantitate</th>
+                    <th>Pret</th>
+                    <th>Metoda de plata</th>
+                </tr>
+            </thead>
+
+            <tbody>
+                {% for items in products %}
+                <tr>
+                    <td>{{ items.title }}</td>
+                    <td>{{ items.quantity }}</td>
+                    <td>{{ items.price }} Lei</td>
+                    <td>{% if paymentMethod == 1 %}Fan Curier{% elseif paymentMethod == 2 %}Posta Romana{% endif %}</td>
+                </tr>
+                {% endfor %}
+            </tbody>
+        </table>
+    </div>
+
+    <div class="col">
+        Total de plata: {{ basket.subTotal | number_format(2) }} RON
+    </div>
+</div>
+{% endblock %}
